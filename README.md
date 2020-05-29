@@ -1,2 +1,5 @@
-# cloud-monitoring
-Build/Deploy an ELK monitoring stack within a MS Azure virtual network.
+## Automated ELK Stack Deployment
+
+The files in this repository were used to configure the network depicted below.
+
+![RedTeam_Net](diagrams/RedTeam_Net.png)
