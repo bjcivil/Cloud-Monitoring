@@ -2,4 +2,4 @@
 
 The files in this repository were used to configure the network depicted below.
 
-![RedTeam_Net](diagrams/RedTeam_Net.png)
+![RedTeam_Net](images/RedTeam_Net.png)
