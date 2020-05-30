@@ -2,11 +2,11 @@
 
 The files in this repository were used to configure the network depicted below.
 
-![TODO: Update the path with the name of your diagram](Images/diagram_filename.png)
+![RedTeam_Net](Images/ReaTeam_Net.png)
 
 These files have been tested and used to generate a live ELK deployment on Azure. They can be used to either recreate the entire deployment pictured above. Alternatively, select portions of the configuration file may be used to install only certain pieces of it, such as Filebeat.
 
-    - _filebeat_playbook.yml_
+   - _filebeat_playbook.yml._
 
 This document contains the following details:
 - Description of the Topology
@@ -34,64 +34,78 @@ _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdow
 
 | Name     | Function | IP Address | Operating System |
 |----------|----------|------------|------------------|
-| Jump Box | Gateway  | 10.0.0.1   | Linux            |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
-| TODO     |          |            |                  |
+| Jump Box | Gateway  | 10.0.1.4   | Linux            |
+| Elk Stack| Monitor  | 10.0.1.9   | Linux            |
+| DVWA-VM1 | App & DB | 10.0.1.5   | Linux            |
+| DVWA-VM2 | App & DB | 10.0.1.6   | Linux            |
+| DVWA-VM3 | App & DB | 10.0.1.7   | Linux            |
+| DVWA-VM4 | App & DB | 10.0.1.8   | Linux            |
 
 ### Access Policies
 
-The machines on the internal network are not exposed to the public Internet. 
+The machines on the internal network are not exposed to the public Internet.
 
-Only the _____ machine can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _TODO: Add whitelisted IP addresses_
+Only the Jump Box can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
+- _173.67.243.40_
 
-Machines within the network can only be accessed by _____.
-- _TODO: Which machine did you allow to access your ELK VM? What was its IP address?_
+Machines within the network can only be accessed by the Jump Box.
+- _The Elk VM is accessible using Jump Box / ansible docker container. Jump Box public IP address was 51.141.164.178_
 
 A summary of the access policies in place can be found in the table below.
 
 | Name     | Publicly Accessible | Allowed IP Addresses |
 |----------|---------------------|----------------------|
-| Jump Box | Yes/No              | 10.0.0.1 10.0.0.2    |
-|          |                     |                      |
-|          |                     |                      |
+| Jump Box | Yes                 | 173.67.243.40        |
+| Elk Stack| No                  | 10.0.1.4             |
+| DVWA-VM1 | No                  | 10.0.1.4             |
+| DVWA-VM2 | No                  | 10.0.1.4             |
+| DVWA-VM3 | No                  | 10.0.1.4             |
+| DVWA-VM4 | No                  | 10.0.1.4             |
 
 ### Elk Configuration
 
-Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because...
-- _TODO: What is the main advantage of automating configuration with Ansible?_
+Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because
+_configuring The ELK VM require downloading and installing different applications to work together which can be time consuming. 
+_Using Ansible increases productivity and ensures our configurations will do exactly the same thing every time we run them, 
+_by eliminating as much variability between configurations as possible._
 
 The playbook implements the following tasks:
-- _TODO: In 3-5 bullets, explain the steps of the ELK installation play. E.g., install Docker; download image; etc._
-- ...
-- ...
+- _Change the memory on the host machine_
+- Install docker.io: the Docker engine, used for running containers.
+- Install python-pip: used to install Python software.
+- Install docker: Python client for Docker. Required by ELK.
+- Download the Docker container called sebp/elk
+- Configure the container to start with the following port mappings:5601:5601; 9200:9200; 5044:5044
+- Start the container.
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![TODO: Update the path with the name of your screenshot of docker ps output](Images/docker_ps_output.png)
+![Elk_stack_ps](images/Elk_stack_ps.png)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
-- _TODO: List the IP addresses of the machines you are monitoring_
+- _10.0.1.5; 10.0.1.6; 10.0.1.7; 10.0.1.8_
 
 We have installed the following Beats on these machines:
-- _TODO: Specify which Beats you successfully installed_
+- _Filebeat_
 
 These Beats allow us to collect the following information from each machine:
-- _TODO: In 1-2 sentences, explain what kind of data each beat collects, and provide 1 example of what you expect to see. E.g., `Winlogbeat` collects Windows logs, which we use to track user logon events, etc._
+- _Filebeat monitors the system log files, collects log events such auth.log which tracks usage of authorization or logon events._
 
 ### Using the Playbook
 In order to use the playbook, you will need to have an Ansible control node already configured. Assuming you have such a control node provisioned: 
 
 SSH into the control node and follow the steps below:
-- Copy the _____ file to _____.
-- Update the _____ file to include...
-- Run the playbook, and navigate to ____ to check that the installation worked as expected.
+- Copy the filebeat-playbook.yml file to /etc/ansible/roles/.  Ensure the filebeat configaration file (filebeat_configuration.yml) is added to /etc/ansible/files/.
+- Update the ansible hosts file to include the IP of the machines. For Elk add a group called [elkservers] on the ansible hosts file and specify the IP address of the ELK VM.
+- Use the hosts option in Ansible to specify which machines to install elk on and which one to install filebeat i.e. for elk use elkservers and for filebeat use webservers.
+- Run the playbook, and navigate to http://[Elk.VM.IP]:5601 to check that the installation worked as expected.
 
-_TODO: Answer the following questions to fill in the blanks:_
-- _Which file is the playbook? Where do you copy it?_
-- _Which file do you update to make Ansible run the playbook on a specific machine? How do I specify which machine to install the ELK server on versus which to install Filebeat on?_
-- _Which URL do you navigate to in order to check that the ELK server is running?
+- Which file is the playbook? filebeat_playbook.yml 
+- Where do you copy it? /etc/ansible/roles/
+- Which file do you update to make Ansible run the playbook on a specific machine? ansible hosts file
+- How do I specify which machine to install the ELK server on versus which to install Filebeat on? 
+    - For Elk add a group called [elkservers] on the ansible hosts file and specify the IP address of the ELK VM _
+    - Use the hosts option in Ansible to specify which machines to install elk and which one to install filebeat i.e. for elk use elkservers and for filebeat use webservers.
 
-_As a **Bonus**, provide the specific commands the user will need to run to download the playbook, update the files, etc._
+- Which URL do you navigate to in order to check that the ELK server is running? Navigate to http://[Elk.VM.IP (52.250.6.220)]:5601. 
