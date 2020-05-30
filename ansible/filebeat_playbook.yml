@@ -1,0 +1,28 @@
+---
+- name: Filebeat Installer
+  hosts: webservers
+  become: true
+  tasks:
+  - name: Download filebeat
+    shell: curl -L -O https://artifacts.elastic.co/downloads/beats/filebeat/filebeat-7.6.1-amd64.deb
+     
+  - name: Install filebeat
+    shell: dpkg -i filebeat-7.6.1-amd64.deb
+
+  - name: Copy filebeat configuration
+    copy:
+     src: /etc/ansible/filebeat-configuration.yml
+     dest: /etc/filebeat/filebeat.yml
+     owner: root
+     group: root
+     mode: 0600
+     backup: yes
+
+  - name: Restart filebeat
+    shell: filebeat modules enable system
+
+  - name: Filebeat setup
+    shell: filebeat setup
+
+  - name: Filebeat -e
+    shell: filebeat -e &

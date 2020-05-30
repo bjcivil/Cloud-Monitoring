@@ -46,7 +46,7 @@ _Note: Use the [Markdown Table Generator](http://www.tablesgenerator.com/markdow
 The machines on the internal network are not exposed to the public Internet.
 
 Only the Jump Box can accept connections from the Internet. Access to this machine is only allowed from the following IP addresses:
-- _173.67.243.40_
+_173.67.243.40_
 
 Machines within the network can only be accessed by the Jump Box.
 - _The Elk VM is accessible using Jump Box / ansible docker container. Jump Box public IP address was 51.141.164.178_
@@ -75,12 +75,12 @@ The playbook implements the following tasks:
 - Install python-pip: used to install Python software.
 - Install docker: Python client for Docker. Required by ELK.
 - Download the Docker container called sebp/elk
-- Configure the container to start with the following port mappings:5601:5601; 9200:9200; 5044:5044
+- Configure the container to start with the following port mappings: 5601:5601; 9200:9200; 5044:5044
 - Start the container.
 
 The following screenshot displays the result of running `docker ps` after successfully configuring the ELK instance.
 
-![Elk_stack_ps](images/ELK_stack_ps.png)
+![ELK_stack_ps](images/ELK_stack_ps.png)
 
 ### Target Machines & Beats
 This ELK server is configured to monitor the following machines:
@@ -105,7 +105,7 @@ SSH into the control node and follow the steps below:
 - Where do you copy it? /etc/ansible/roles/
 - Which file do you update to make Ansible run the playbook on a specific machine? ansible hosts file
 - How do I specify which machine to install the ELK server on versus which to install Filebeat on? 
-    - For Elk add a group called [elkservers] on the ansible hosts file and specify the IP address of the ELK VM _
+    - For Elk add a group called [elkservers] on the ansible hosts file and specify the IP address of the ELK VM.
     - Use the hosts option in Ansible to specify which machines to install elk and which one to install filebeat i.e. for elk use elkservers and for filebeat use webservers.
 
-- Which URL do you navigate to in order to check that the ELK server is running? Navigate to http://[Elk.VM.IP (52.250.6.220)]:5601. 
+- Which URL do you navigate to in order to check that the ELK server is running? Navigate to http://[Elk.VM.IP (52.175.218.194)]:5601. 
