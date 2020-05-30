@@ -65,12 +65,12 @@ A summary of the access policies in place can be found in the table below.
 ### Elk Configuration
 
 Ansible was used to automate configuration of the ELK machine. No configuration was performed manually, which is advantageous because
-_configuring The ELK VM require downloading and installing different applications to work together which can be time consuming. 
-_Using Ansible increases productivity and ensures our configurations will do exactly the same thing every time we run them, 
-_by eliminating as much variability between configurations as possible._
+configuring The ELK VM require downloading and installing different applications to work together which can be time consuming.
+Using Ansible increases productivity and ensures our configurations will do exactly the same thing every time we run them, by eliminating as 
+much variability between configurations as possible.
 
 The playbook implements the following tasks:
-- _Change the memory on the host machine_
+- Change the memory on the host machine.
 - Install docker.io: the Docker engine, used for running containers.
 - Install python-pip: used to install Python software.
 - Install docker: Python client for Docker. Required by ELK.
